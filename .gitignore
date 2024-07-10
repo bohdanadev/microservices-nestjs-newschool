@@ -4,6 +4,9 @@
 dist
 tmp
 /out-tsc
+/mongo_db
+
+/envs
 
 # dependencies
 node_modules
