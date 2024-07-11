@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@newschool/contracts": ["contracts/src/index.ts"],
       "@newschool/interfaces": ["interfaces/src/index.ts"]
     }
   },
