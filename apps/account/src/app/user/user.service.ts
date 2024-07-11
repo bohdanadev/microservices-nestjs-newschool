@@ -3,19 +3,21 @@ import { UserRepository } from './repositories/user.repository';
 import { Injectable } from '@nestjs/common';
 import { IUser } from '@newschool/interfaces';
 import { UserEntity } from './entities/user.entity';
+import { UserEventEmitter } from './user.event-emitter';
+import { BuyCourseSaga } from './sagas/buy-course.saga';
 
 @Injectable()
 export class UserService {
   constructor(
     private readonly userRepository: UserRepository,
     private readonly rmqService: RMQService,
-    private readonly userEventEmmiter: UserEventEmiiter
+    private readonly userEventEmitter: UserEventEmitter
   ) {}
 
   public async changeProfile(user: Pick<IUser, 'displayName'>, id: string) {
     const existedUser = await this.userRepository.findUserById(id);
     if (!existedUser) {
-      throw new Error('Такого пользователя не существует');
+      throw new Error('User not found');
     }
     const userEntity = new UserEntity(existedUser).updateProfile(
       user.displayName
@@ -27,7 +29,7 @@ export class UserService {
   public async buyCourse(userId: string, courseId: string) {
     const existedUser = await this.userRepository.findUserById(userId);
     if (!existedUser) {
-      throw new Error('Такого пользователя нет');
+      throw new Error('User not found');
     }
     const userEntity = new UserEntity(existedUser);
     const saga = new BuyCourseSaga(userEntity, courseId, this.rmqService);
@@ -39,7 +41,7 @@ export class UserService {
   public async checkPayments(userId: string, courseId: string) {
     const existedUser = await this.userRepository.findUserById(userId);
     if (!existedUser) {
-      throw new Error('Такого пользователя нет');
+      throw new Error('User not found');
     }
     const userEntity = new UserEntity(existedUser);
     const saga = new BuyCourseSaga(userEntity, courseId, this.rmqService);
@@ -50,7 +52,7 @@ export class UserService {
 
   private updateUser(user: UserEntity) {
     return Promise.all([
-      this.userEventEmmiter.handle(user),
+      this.userEventEmitter.handle(user),
       this.userRepository.updateUser(user),
     ]);
   }
