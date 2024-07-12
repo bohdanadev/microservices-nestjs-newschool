@@ -5,6 +5,7 @@ import { IUser } from '@newschool/interfaces';
 import { UserEntity } from './entities/user.entity';
 import { UserEventEmitter } from './user.event-emitter';
 import { BuyCourseSaga } from './sagas/buy-course.saga';
+import { Types } from 'mongoose';
 
 @Injectable()
 export class UserService {
@@ -38,7 +39,10 @@ export class UserService {
     return { paymentLink };
   }
 
-  public async checkPayments(userId: string, courseId: string) {
+  public async checkPayments(
+    userId: string | Types.ObjectId,
+    courseId: string | Types.ObjectId
+  ) {
     const existedUser = await this.userRepository.findUserById(userId);
     if (!existedUser) {
       throw new Error('User not found');

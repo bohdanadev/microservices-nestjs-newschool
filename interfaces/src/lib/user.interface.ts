@@ -22,6 +22,6 @@ export interface IUser {
 }
 
 export interface IUserCourses {
-  courseId: string;
+  courseId: string | Types.ObjectId;
   purchaseState: PurchaseState;
 }

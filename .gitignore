@@ -6,7 +6,9 @@ tmp
 /out-tsc
 /mongo_db
 
-/envs
+/envs/.api.env
+/envs/.account.env
+
 
 # dependencies
 node_modules

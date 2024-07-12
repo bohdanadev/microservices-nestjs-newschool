@@ -8,19 +8,20 @@ import {
   BuyCourseSagaStateStarted,
 } from './buy-course.steps';
 import { BuyCourseSagaState } from './buy-course.state';
+import { Types } from 'mongoose';
 
 export class BuyCourseSaga {
   private state: BuyCourseSagaState;
 
   constructor(
     public user: UserEntity,
-    public courseId: string,
+    public courseId: string | Types.ObjectId,
     public rmqService: RMQService
   ) {
     this.setState(user.getCourseState(courseId), courseId);
   }
 
-  setState(state: PurchaseState, courseId: string) {
+  setState(state: PurchaseState, courseId: string | Types.ObjectId) {
     switch (state) {
       case PurchaseState.Started:
         this.state = new BuyCourseSagaStateStarted();

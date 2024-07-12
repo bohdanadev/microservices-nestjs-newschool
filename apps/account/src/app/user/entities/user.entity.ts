@@ -27,7 +27,10 @@ export class UserEntity implements IUser {
     this.courses = user.courses;
   }
 
-  public setCourseStatus(courseId: string, state: PurchaseState) {
+  public setCourseStatus(
+    courseId: string | Types.ObjectId,
+    state: PurchaseState
+  ) {
     const exist = this.courses.find((c) => c.courseId === courseId);
     if (!exist) {
       this.courses.push({
@@ -54,7 +57,7 @@ export class UserEntity implements IUser {
     return this;
   }
 
-  public getCourseState(courseId: string): PurchaseState {
+  public getCourseState(courseId: string | Types.ObjectId): PurchaseState {
     return (
       this.courses.find((c) => c.courseId === courseId)?.purchaseState ??
       PurchaseState.Started

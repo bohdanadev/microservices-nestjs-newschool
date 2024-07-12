@@ -1,20 +1,21 @@
 import { IsNumber, IsString } from 'class-validator';
+import { Types } from 'mongoose';
 
 export namespace PaymentGenerateLink {
   export const topic = 'payment.generate-link.command';
 
   export class Request {
     @IsString()
-    courseId: string;
+    courseId?: string | Types.ObjectId;
 
     @IsString()
-    userId: string;
+    userId?: string | Types.ObjectId;
 
     @IsNumber()
-    sum: number;
+    sum?: number;
   }
 
   export class Response {
-    paymentLink: string;
+    paymentLink?: string;
   }
 }

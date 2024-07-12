@@ -5,13 +5,13 @@ export namespace AccountBuyCourse {
 
   export class Request {
     @IsString()
-    userId: string;
+    userId?: string;
 
     @IsString()
-    courseId: string;
+    courseId?: string;
   }
 
   export class Response {
-    paymentLink: string;
+    paymentLink?: string;
   }
 }

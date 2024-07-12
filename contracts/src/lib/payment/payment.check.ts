@@ -1,4 +1,5 @@
 import { IsString } from 'class-validator';
+import { Types } from 'mongoose';
 
 export type PaymentStatus = 'canceled' | 'success' | 'progress';
 
@@ -7,13 +8,13 @@ export namespace PaymentCheck {
 
   export class Request {
     @IsString()
-    courseId: string;
+    courseId?: string | Types.ObjectId;
 
     @IsString()
-    userId: string;
+    userId?: string | Types.ObjectId;
   }
 
   export class Response {
-    status: PaymentStatus;
+    status?: PaymentStatus;
   }
 }
